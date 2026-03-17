@@ -15,7 +15,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+const categoryIcons: Record<string, React.ComponentType<{ className?: string; color?: string }>> = {
   Housing: Home,
   "Food & Dining": UtensilsCrossed,
   Transportation: Car,
@@ -67,7 +67,7 @@ export function RecentTransactions() {
                 className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                 style={{ backgroundColor: `${color}15` }}
               >
-                <Icon className="w-5 h-5" style={{ color }} />
+                <Icon className="w-5 h-5" color={color} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{txn.description}</p>

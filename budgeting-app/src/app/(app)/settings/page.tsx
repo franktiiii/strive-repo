@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   User,
   Bell,
@@ -12,6 +13,7 @@ import {
   Moon,
   Smartphone,
 } from "lucide-react";
+import { useAuth } from "@/components/providers/auth-provider";
 
 const settingsSections = [
   {
@@ -22,7 +24,7 @@ const settingsSections = [
         label: "Profile",
         description: "Name, email, avatar",
         color: "#7B61FF",
-        value: "frank@strive.app",
+        value: "",
       },
       {
         icon: Shield,
@@ -85,6 +87,14 @@ const settingsSections = [
 ];
 
 export default function SettingsPage() {
+  const { user, signOut } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace("/login");
+  };
+
   return (
     <>
       <div>
@@ -98,11 +108,11 @@ export default function SettingsPage() {
       <div className="glass-card rounded-2xl p-6">
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00D632] to-[#A8FF00] flex items-center justify-center text-black text-2xl font-black">
-            F
+            {user?.email?.charAt(0).toUpperCase() ?? "?"}
           </div>
           <div>
-            <h2 className="text-xl font-bold">Frank</h2>
-            <p className="text-sm text-muted-foreground">frank@strive.app</p>
+            <h2 className="text-xl font-bold">{user?.email?.split("@")[0] ?? "User"}</h2>
+            <p className="text-sm text-muted-foreground">{user?.email ?? ""}</p>
             <p className="text-xs text-muted-foreground/60 mt-0.5">
               Member since October 2025
             </p>
@@ -155,7 +165,7 @@ export default function SettingsPage() {
           Danger Zone
         </h3>
         <div className="glass-card rounded-2xl overflow-hidden">
-          <button className="w-full flex items-center gap-4 px-5 py-4 hover:bg-[#FF4757]/5 transition-colors text-left">
+          <button onClick={handleSignOut} className="w-full flex items-center gap-4 px-5 py-4 hover:bg-[#FF4757]/5 transition-colors text-left">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#FF4757]/10">
               <LogOut className="w-5 h-5 text-[#FF4757]" />
             </div>

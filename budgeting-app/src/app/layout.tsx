@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
+import { AuthProvider } from "@/components/providers/auth-provider";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -21,14 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} font-sans antialiased`}>
-        <div className="min-h-screen bg-[#0A0A0F]">
-          <Sidebar />
-          <main className="lg:ml-[260px] pt-20 lg:pt-0">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-              {children}
-            </div>
-          </main>
-        </div>
+        <AuthProvider>
+          <div className="min-h-screen bg-[#0A0A0F]">
+            {children}
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

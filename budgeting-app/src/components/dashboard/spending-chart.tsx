@@ -60,7 +60,8 @@ export function SpendingChart() {
                 color: "#F8F8F2",
                 fontSize: "13px",
               }}
-              formatter={(value: number) => [`$${value.toLocaleString()}`, ""]}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              formatter={(value: any) => [`$${Number(value).toLocaleString()}`, ""]}
             />
             <Bar dataKey="spent" radius={[8, 8, 0, 0]} maxBarSize={40}>
               {monthlySpending.map((entry, index) => (

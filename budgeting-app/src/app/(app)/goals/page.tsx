@@ -13,7 +13,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string; color?: string }>> = {
   Shield,
   Car,
   Plane,
@@ -95,7 +95,7 @@ export default function GoalsPage() {
                     {isComplete ? (
                       <CheckCircle2 className="w-5 h-5 text-[#00D632]" />
                     ) : (
-                      <Icon className="w-5 h-5" style={{ color: goal.color }} />
+                      <Icon className="w-5 h-5" color={goal.color} />
                     )}
                   </div>
                   <div>

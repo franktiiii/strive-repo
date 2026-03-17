@@ -11,9 +11,12 @@ import {
   Settings,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/components/providers/auth-provider";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -26,7 +29,14 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.replace("/login");
+  };
 
   return (
     <>
@@ -101,22 +111,23 @@ export function Sidebar() {
           })}
         </nav>
 
-        {/* Bottom card */}
-        <div className="p-4">
-          <div className="rounded-xl bg-gradient-to-br from-[#00D632]/10 to-[#7B61FF]/10 border border-white/[0.06] p-4">
-            <p className="text-xs text-muted-foreground mb-1">Daily Streak</p>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold text-[#00D632]">12</span>
-              <span className="text-xs text-muted-foreground">days</span>
+        {/* User info + sign out */}
+        <div className="p-4 border-t border-white/[0.06]">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 rounded-full bg-[#00D632]/20 flex items-center justify-center text-[#00D632] text-sm font-bold">
+              {user?.email?.charAt(0).toUpperCase() ?? "?"}
             </div>
-            <div className="mt-2 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-[#00D632] to-[#A8FF00]"
-                style={{ width: "40%" }}
-              />
-            </div>
-            <p className="text-[10px] text-muted-foreground mt-1">18 more to next badge</p>
+            <span className="text-sm text-white/70 truncate flex-1">
+              {user?.email ?? ""}
+            </span>
           </div>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-white/50 hover:text-[#FF4757] hover:bg-[#FF4757]/10 transition-all"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign Out
+          </button>
         </div>
       </aside>
     </>

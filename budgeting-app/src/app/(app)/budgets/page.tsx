@@ -14,7 +14,7 @@ import {
   Pencil,
 } from "lucide-react";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string; color?: string }>> = {
   Home,
   UtensilsCrossed,
   Car,
@@ -94,7 +94,7 @@ export default function BudgetsPage() {
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
                     style={{ backgroundColor: `${cat.color}15` }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: cat.color }} />
+                    <Icon className="w-5 h-5" color={cat.color} />
                   </div>
                   <div>
                     <h3 className="font-semibold">{cat.name}</h3>
